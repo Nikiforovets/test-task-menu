@@ -225,7 +225,9 @@ header{
         padding: 0px 10px;
     }
 
-    .element::after{
+    .arrow{
+        position: absolute;
+        right: 40px;
         content: '';
         float: right;
         margin-right: 10px;
@@ -235,8 +237,13 @@ header{
         border-bottom: solid 1px gray;
         border-left: solid 1px gray;
         /* transform: translate( 0px,-30px); */
-        transform: translate( -10px,-35px) rotate(-45deg);
+        transform:  translate(-10px, -30px) rotate(-45deg);
+        transition: all 0.3s ease;
 
+    }
+
+    .elem.active .arrow{
+        transform: translate(-10px, -20px) rotate(135deg);
     }
 
     .burger-line.active{
@@ -253,9 +260,12 @@ header{
         top:0px;
     }
 
-
     .submenu{
-        /* position: relative; */
+        display: block;
+    }
+
+    .submenu.active{
+        position: inherit;
     }
     
 }
