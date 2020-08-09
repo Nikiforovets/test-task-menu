@@ -5,12 +5,13 @@ for (let i = 1; i <= 6; i++) {
     if (screen.width > 768) {
         addDesktopListeners(submenu, background, i);
     } else {
-        addMobileListeners(submenu, i);
+        addBurgerTopListeners(submenu, i);
     }
 }
 
 if (screen.width < 768) {
     createArrows();
+    addBurgerLowListeners();
 }
 
 function addDesktopListeners(submenu, background, i) {
@@ -27,25 +28,39 @@ function addDesktopListeners(submenu, background, i) {
     });
 }
 
-function addMobileListeners(submenu, i) {
-    document.getElementById(`nav-elem${i}`).addEventListener("click", function () {
-        const activeTabs = document.getElementsByClassName('elem active');
-        for (tab of activeTabs) {
-            if (document.getElementById(`elem${i}`) != tab)
-                tab.className = 'elem';
-        }
-        const activeSubmenues = document.getElementsByClassName('submenu active');
-        for (activeSubmenu of activeSubmenues) {
-            if (activeSubmenu != submenu)
-                activeSubmenu.className = 'submenu';
-        }
-        submenu.classList.toggle('active');
-        for (element of this.childNodes) {
-            if (element.className == 'elem' || element.className == 'elem active') {
-                element.classList.toggle('active');
+function addBurgerTopListeners(submenu, i) {
+    document.getElementById(`nav-elem${i}`).addEventListener("click", function (e) {
+        if (e.target.classList.contains('elem') || e.target.classList.contains('arrow')) {
+            const activeTabs = document.getElementsByClassName('elem active');
+            for (tab of activeTabs) {
+                if (document.getElementById(`elem${i}`) != tab)
+                    tab.className = 'elem';
+            }
+            const activeSubmenues = document.getElementsByClassName('submenu active');
+            for (activeSubmenu of activeSubmenues) {
+                if (activeSubmenu != submenu)
+                    activeSubmenu.className = 'submenu';
+            }
+            submenu.classList.toggle('active');
+            for (element of this.childNodes) {
+                if (element.className == 'elem' || element.className == 'elem active') {
+                    element.classList.toggle('active');
+                }
             }
         }
     });
+}
+
+function addBurgerLowListeners() {
+    subArrows = document.getElementsByClassName('subelement-arrow');
+    lowMenues = document.getElementsByClassName('low-level-menu');
+    console.log(subArrows);
+    for (arrow of subArrows) {
+        arrow.addEventListener("click", function () {
+            this.parentNode.nextElementSibling.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    }
 }
 
 function createArrows() {
@@ -54,6 +69,12 @@ function createArrows() {
         let arrow = document.createElement('div');
         arrow.classList.add('arrow');
         element.appendChild(arrow);
+    }
+    const subElements = document.getElementsByClassName('label-low-lavel-menu');
+    for (const subElement of subElements) {
+        let arrow = document.createElement('div');
+        arrow.classList.add('subelement-arrow');
+        subElement.appendChild(arrow);
     }
 }
 
