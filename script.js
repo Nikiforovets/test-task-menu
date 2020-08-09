@@ -47,6 +47,11 @@ function addBurgerTopListeners(submenu, i) {
                     element.classList.toggle('active');
                 }
             }
+            subArrows = document.getElementsByClassName('subelement-arrow');
+            for (disableArrow of subArrows) {
+                disableArrow.parentNode.nextElementSibling.classList.remove('active');
+                disableArrow.classList.remove('active');
+            }
         }
     });
 }
@@ -57,6 +62,12 @@ function addBurgerLowListeners() {
     console.log(subArrows);
     for (arrow of subArrows) {
         arrow.addEventListener("click", function () {
+            for (disableArrow of subArrows) {
+                if (disableArrow != this) {
+                    disableArrow.parentNode.nextElementSibling.classList.remove('active');
+                    disableArrow.classList.remove('active');
+                }
+            }
             this.parentNode.nextElementSibling.classList.toggle('active');
             this.classList.toggle('active');
         });
